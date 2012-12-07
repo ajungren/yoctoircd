@@ -1,0 +1,5 @@
+Welcome to YoctoIRCd! Unfortunately, this is not a real IRC server, so you will
+be disconnected shortly. YoctoIRCd was created to relay a message to someone
+trying to connect to the server (perhaps telling the user to switch to a
+different port with SSL enabled), but it seems the administrator of Yocto
+forgot to set a message!

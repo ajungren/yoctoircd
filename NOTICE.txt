@@ -1,0 +1,6 @@
+YoctoIRCd
+Copyright 2012 Ayron Jungren
+
+This product includes software developed by Ayron Jungren
+(https://github.com/dririan).
+

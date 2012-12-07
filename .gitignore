@@ -1,0 +1,10 @@
+# Object files
+src/*.o
+
+# Executable
+yoctoircd
+
+# Editor junk
+.*.swp
+*~
+

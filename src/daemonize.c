@@ -40,13 +40,13 @@ void daemonize() {
         exit(EXIT_SUCCESS);
 
     setsid();
-    close(0);
-    close(1);
-    close(2);
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
 
-    dup2(globals->devnull, 0);
-    dup2(globals->devnull, 1);
-    dup2(globals->devnull, 2);
+    dup2(globals->devnull, STDIN_FILENO);
+    dup2(globals->devnull, STDOUT_FILENO);
+    dup2(globals->devnull, STDERR_FILENO);
 
     signal(SIGCHLD, SIG_IGN);
     signal(SIGTSTP, SIG_IGN);

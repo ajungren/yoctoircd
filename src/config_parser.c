@@ -95,7 +95,7 @@ config_t *parse_config(const char *path) {
             }
 
             else if(strcmp(config_token, "MotdPath") == 0) {
-                safe_malloc(config->motd_path, strlen(config_value));
+                safe_malloc(config->motd_path, strlen(config_value)+1);
                 strcpy(config->motd_path, config_value);
             }
 
@@ -108,30 +108,30 @@ config_t *parse_config(const char *path) {
                     }
                 }
                 length = strlen(config_value);
-                safe_malloc(config->server_address, length);
+                safe_malloc(config->server_address, length+1);
                 strcpy(config->server_address, config_value);
                 config->server_address_length = length;
             }
 
             else if(strcmp(config_token, "ServerName") == 0) {
                 length = strlen(config_value);
-                safe_malloc(config->server_name, length);
+                safe_malloc(config->server_name, length+1);
                 strcpy(config->server_name, config_value);
                 config->server_name_length = length;
             }
 
             else if(strcmp(config_token, "ChrootFolder") == 0) {
-                safe_malloc(config->chroot_folder, strlen(config_value));
+                safe_malloc(config->chroot_folder, strlen(config_value)+1);
                 strcpy(config->chroot_folder, config_value);
             }
 
             else if(strcmp(config_token, "SetUser") == 0) {
-                safe_malloc(config->set_user, strlen(config_value));
+                safe_malloc(config->set_user, strlen(config_value)+1);
                 strcpy(config->set_user, config_value);
             }
 
             else if(strcmp(config_token, "SetGroup") == 0) {
-                safe_malloc(config->set_group, strlen(config_value));
+                safe_malloc(config->set_group, strlen(config_value)+1);
                 strcpy(config->set_group, config_value);
             }
 

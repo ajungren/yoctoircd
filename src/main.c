@@ -134,8 +134,10 @@ int main(int argc, char **argv) {
     sigaction(SIGUSR1, &parent_signal_action, NULL);
     sigaction(SIGUSR2, &parent_signal_action, NULL);
 
+#ifdef YOCTO_DAEMONIZE
     puts("Daemonizing");
     daemonize();
+#endif
 
     start_server(globals->socket);
 

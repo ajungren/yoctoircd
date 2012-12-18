@@ -20,6 +20,10 @@
 
 /***** Compile-time Configuration *****/
 
+/* Comment out this line if you don't want YoctoIRCd to daemonize after it loads
+ * its configuration and MOTD file. */
+#define YOCTO_DAEMONIZE
+
 /* The starting size of the file buffer, and the amount is is increased by each
  * time it is resized up. */
 #define YOCTO_FILE_BUF_SIZE 4096

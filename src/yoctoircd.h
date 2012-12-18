@@ -51,18 +51,18 @@ typedef struct {
 
 /***** Global variables *****/
 
+extern config_t *config;
+extern globals_t *globals;
+
 #ifdef YOCTO_CONCRETE_EXTERNS
 config_t *config;
 globals_t *globals;
-#else
-extern config_t *config;
-extern globals_t *globals;
 #endif
 
 /***** Function prototypes *****/
 
 void child_signal_handler(int signum);
-void daemonize();
+void daemonize(void);
 void do_chroot(const char *path);
 char *fread_all(FILE *handle, uint64_t maximum_length);
 void free_config(config_t *config);

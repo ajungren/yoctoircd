@@ -30,7 +30,10 @@ void do_chroot(const char *path) {
         exit(EXIT_FAILURE);
     }
 
-    chdir("/");
+    if(chdir("/") == -1) {
+        perror("Could not chdir");
+        exit(EXIT_FAILURE);
+    }
 }
 
 gid_t get_group(const char *group) {

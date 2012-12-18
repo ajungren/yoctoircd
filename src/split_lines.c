@@ -22,11 +22,12 @@
 
 char **split_lines(char *string) {
     char **split, *token;
-    int32_t index;
-    uint32_t lines = 0, length;
+    int64_t index;
+    size_t length;
+    uint32_t lines = 0;
 
     length = strlen(string);
-    for(index = 0; index < length; index++) {
+    for(index = 0; index < (int64_t) length; index++) {
         if(string[index] == '\n')
             lines++;
     }

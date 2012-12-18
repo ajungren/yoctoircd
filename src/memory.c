@@ -19,12 +19,12 @@
 
 #include <stdlib.h>
 
-void free_config(config_t *config) {
-    if(config != NULL) {
-        safe_free(config->motd_path);
-        safe_free(config->server_address);
-        safe_free(config->server_name);
-        free(config);
+void free_config(config_t *cfg) {
+    if(cfg != NULL) {
+        safe_free(cfg->motd_path);
+        safe_free(cfg->server_address);
+        safe_free(cfg->server_name);
+        free(cfg);
     }
 }
 

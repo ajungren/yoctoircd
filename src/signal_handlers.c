@@ -23,8 +23,10 @@
 #include <unistd.h>
 
 void child_signal_handler(int signum) {
-    close(globals->socket);
-    exit(EXIT_FAILURE);
+    if(signum == SIGALRM) {
+        close(globals->socket);
+        exit(EXIT_FAILURE);
+    }
 }
 
 void parent_signal_handler(int signum) {

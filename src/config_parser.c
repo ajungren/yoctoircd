@@ -23,9 +23,9 @@
 #include <string.h>
 
 #define parse_error \
-    safe_free(config->motd_path); \
-    safe_free(config->server_address); \
-    safe_free(config->server_name); \
+    safe_free(cfg->motd_path); \
+    safe_free(cfg->server_address); \
+    safe_free(cfg->server_name); \
     safe_free(config); \
     return NULL;
 
@@ -34,7 +34,7 @@
 config_t *parse_config(const char *path) {
     char *config_data, *config_token, *config_value;
     FILE *config_file;
-    config_t *config;
+    config_t *cfg;
     uint8_t missing_options = 0;
     uint16_t index, length;
 
@@ -48,15 +48,15 @@ config_t *parse_config(const char *path) {
     if(config_data == NULL)
         return NULL;
 
-    safe_malloc(config, sizeof(config_t));
-    config->port = 0;
-    config->timeout = 0;
-    config->motd_path = NULL;
-    config->server_address = NULL;
-    config->server_name = NULL;
-    config->chroot_folder = NULL;
-    config->set_user = NULL;
-    config->set_group = NULL;
+    safe_malloc(cfg, sizeof(config_t));
+    cfg->port = 0;
+    cfg->timeout = 0;
+    cfg->motd_path = NULL;
+    cfg->server_address = NULL;
+    cfg->server_name = NULL;
+    cfg->chroot_folder = NULL;
+    cfg->set_user = NULL;
+    cfg->set_group = NULL;
 
     config_token = strtok(config_data, TOKEN_SEP);
     while(config_token != NULL) {
@@ -79,24 +79,24 @@ config_t *parse_config(const char *path) {
             *config_value++ = '\0';
 
             if(strcmp(config_token, "Port") == 0) {
-                config->port = atoi(config_value);
-                if(config->port == 0) {
+                cfg->port = (uint16_t) atoi(config_value);
+                if(cfg->port == 0) {
                     fprintf(stderr, "Invalid port: \"%s\"\n", config_value);
                     parse_error;
                 }
             }
 
             else if(strcmp(config_token, "Timeout") == 0) {
-                config->timeout = atoi(config_value);
-                if(config->timeout == 0) {
+                cfg->timeout = (uint16_t) atoi(config_value);
+                if(cfg->timeout == 0) {
                     fprintf(stderr, "Invalid timeout: \"%s\"\n", config_value);
                     parse_error;
                 }
             }
 
             else if(strcmp(config_token, "MotdPath") == 0) {
-                safe_malloc(config->motd_path, strlen(config_value)+1);
-                strcpy(config->motd_path, config_value);
+                safe_malloc(cfg->motd_path, strlen(config_value)+1);
+                strcpy(cfg->motd_path, config_value);
             }
 
             else if(strcmp(config_token, "ServerAddress") == 0) {
@@ -107,32 +107,32 @@ config_t *parse_config(const char *path) {
                         parse_error;
                     }
                 }
-                length = strlen(config_value);
-                safe_malloc(config->server_address, length+1);
-                strcpy(config->server_address, config_value);
-                config->server_address_length = length;
+                length = (uint16_t) strlen(config_value);
+                safe_malloc(cfg->server_address, length+1);
+                strcpy(cfg->server_address, config_value);
+                cfg->server_address_length = length;
             }
 
             else if(strcmp(config_token, "ServerName") == 0) {
-                length = strlen(config_value);
-                safe_malloc(config->server_name, length+1);
-                strcpy(config->server_name, config_value);
-                config->server_name_length = length;
+                length = (uint16_t) strlen(config_value);
+                safe_malloc(cfg->server_name, length+1);
+                strcpy(cfg->server_name, config_value);
+                cfg->server_name_length = length;
             }
 
             else if(strcmp(config_token, "ChrootFolder") == 0) {
-                safe_malloc(config->chroot_folder, strlen(config_value)+1);
-                strcpy(config->chroot_folder, config_value);
+                safe_malloc(cfg->chroot_folder, strlen(config_value)+1);
+                strcpy(cfg->chroot_folder, config_value);
             }
 
             else if(strcmp(config_token, "SetUser") == 0) {
-                safe_malloc(config->set_user, strlen(config_value)+1);
-                strcpy(config->set_user, config_value);
+                safe_malloc(cfg->set_user, strlen(config_value)+1);
+                strcpy(cfg->set_user, config_value);
             }
 
             else if(strcmp(config_token, "SetGroup") == 0) {
-                safe_malloc(config->set_group, strlen(config_value)+1);
-                strcpy(config->set_group, config_value);
+                safe_malloc(cfg->set_group, strlen(config_value)+1);
+                strcpy(cfg->set_group, config_value);
             }
 
             else {
@@ -144,23 +144,23 @@ config_t *parse_config(const char *path) {
         config_token = strtok(NULL, TOKEN_SEP);
     }
 
-    if(config->port == 0) {
+    if(cfg->port == 0) {
         fputs("Missing configuration option: Port\n", stderr);
         missing_options++;
     }
-    if(config->timeout == 0) {
+    if(cfg->timeout == 0) {
         fputs("Missing configuration option: Timeout\n", stderr);
         missing_options++;
     }
-    if(config->motd_path == NULL) {
+    if(cfg->motd_path == NULL) {
         fputs("Missing configuration option: MotdPath\n", stderr);
         missing_options++;
     }
-    if(config->server_address == NULL) {
+    if(cfg->server_address == NULL) {
         fputs("Missing configuration option: ServerAddress\n", stderr);
         missing_options++;
     }
-    if(config->server_name == NULL) {
+    if(cfg->server_name == NULL) {
         fputs("Missing configuration option: ServerName\n", stderr);
         missing_options++;
     }
@@ -171,6 +171,6 @@ config_t *parse_config(const char *path) {
         parse_error;
     }
 
-    return config;
+    return cfg;
 }
 

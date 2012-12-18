@@ -26,7 +26,8 @@
 
 void start_child(int socket) {
     char buffer[YOCTO_NET_BUF_SIZE];
-    int32_t index, retval;
+    int32_t index;
+    ssize_t retval;
 
     signal(SIGUSR1, SIG_IGN);
     signal(SIGUSR2, SIG_IGN);

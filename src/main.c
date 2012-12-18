@@ -28,10 +28,10 @@
 #include <unistd.h>
 
 int main(int argc, char **argv) {
-    gid_t gid;
+    gid_t gid = 0;
     struct sigaction parent_signal_action;
     struct sockaddr_in server_addr;
-    uid_t uid;
+    uid_t uid = 0;
 
     if(argc != 2) {
         fprintf(stderr, "Usage: %s CONFIG_FILE\n", argv[0]);
